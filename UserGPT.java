@@ -1,4 +1,4 @@
-package movie2;
+
 
 import java.io.*;
 import java.util.Scanner;
@@ -35,7 +35,7 @@ public class UserGPT {
 
     // Load user from file based on email and password
     public static UserGPT loadFromFile(Scanner sc) {
-        System.out.print("Enter your email to login: ");
+        System.out.print("Enter your username to login: ");
         String inputEmail = sc.nextLine();
         System.out.print("Enter your password: ");
         String inputPassword = sc.nextLine();
