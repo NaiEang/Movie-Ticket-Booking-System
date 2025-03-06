@@ -41,7 +41,7 @@ class Admin{
                 movie.setMovieTitle(scanner.nextLine());
                 String newTitle= scanner.nextLine();
                 if (!newTitle.trim().isEmpty()){
-                    movie.setMovieTitle(MovieTitle);
+                    movie.setMovieTitle(newTitle);
                 }
                 System.out.print("Enter new genre: ");
                 movie.setGenre(scanner.nextLine());
