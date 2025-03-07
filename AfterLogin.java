@@ -8,6 +8,7 @@ import java.io.IOException;
 public class AfterLogin {
     private Scanner scanner = new Scanner(System.in);
     private List<Movie> movies;
+    private String recentBooking = null;
 
     public AfterLogin() {
         this.movies = new ArrayList<>();
@@ -32,6 +33,9 @@ public class AfterLogin {
                     break;
                 case 2:
                     buyTicket();
+                    break;
+                case 3:
+                    viewBooking();
                     break;
                 case 6:
                     System.out.println("Exiting...");
@@ -70,9 +74,68 @@ public class AfterLogin {
 
         if (selectedMovie != null) {
             System.out.println("You have selected: " + selectedMovie.getMovieTitle());
-            // Add further ticket buying logic here
+            showSeats(selectedMovie);
         } else {
             System.out.println("Invalid movie selection.");
+        }
+    }
+
+    private void showSeats(Movie selectedMovie) {
+        System.out.println("Select a seat:");
+        String[] rows = {"A", "B"};
+        int seatsPerRow = 5;
+        for (String row : rows) {
+            System.out.print("Row" + row + ": ");
+            for (int i = 1; i <= seatsPerRow; i++) {
+                System.out.print("(" + i + row + ") ");
+            }
+            System.out.println();
+        }
+        System.out.print("Choose a seat (e.g., 1A): ");
+        String seatSelection = scanner.nextLine();
+
+        if (isValidSeatSelection(seatSelection, rows, seatsPerRow)) {
+            System.out.println("You have selected seat: " + seatSelection);
+            System.out.println("So you have chosen: " + selectedMovie.getMovieTitle() + ", " + selectedMovie.getshowTimes() + ", seat: " + seatSelection);
+            System.out.println("Total: $7");
+            System.out.print("Pay now? (yes/no): ");
+            String payNow = scanner.nextLine();
+
+            if (payNow.equalsIgnoreCase("yes")) {
+                System.out.println("Payment successful. Enjoy your movie!");
+                recentBooking = "Movie: " + selectedMovie.getMovieTitle() + ", Time: " + selectedMovie.getshowTimes() + ", Seat: " + seatSelection;
+            } else {
+                System.out.println("Payment cancelled.");
+            }
+        } else {
+            System.out.println("Invalid seat selection.");
+        }
+    }
+
+    private boolean isValidSeatSelection(String seatSelection, String[] rows, int seatsPerRow) {
+        if (seatSelection.length() < 2) {
+            return false;
+        }
+        String row = seatSelection.substring(seatSelection.length() - 1);
+        String seatNumberStr = seatSelection.substring(0, seatSelection.length() - 1);
+        try {
+            int seatNumber = Integer.parseInt(seatNumberStr);
+            for (String r : rows) {
+                if (r.equals(row) && seatNumber >= 1 && seatNumber <= seatsPerRow) {
+                    return true;
+                }
+            }
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        return false;
+    }
+
+    private void viewBooking() {
+        if (recentBooking != null) {
+            System.out.println("Recent Booking: " + recentBooking);
+        } else {
+            System.out.println("No recent bookings.");
         }
     }
 
