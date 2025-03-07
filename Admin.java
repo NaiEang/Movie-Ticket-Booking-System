@@ -76,7 +76,7 @@ class Admin {
         scanner.nextLine();
 
         try (Connection conn = DatabaseConnection.getConnection()) {
-            String query = "DELETE FROM Movies WHERE movieID=?";
+            String query = "DELETE FROM Movieso WHERE movieID=?";
             PreparedStatement stmt = conn.prepareStatement(query);
             stmt.setInt(1, id);
             int rowsDeleted = stmt.executeUpdate();
