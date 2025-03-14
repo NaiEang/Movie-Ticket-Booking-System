@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 public class AfterLogin {
     private Scanner scanner = new Scanner(System.in);
@@ -12,7 +16,21 @@ public class AfterLogin {
 
     public AfterLogin() {
         this.movies = new ArrayList<>();
-        loadMoviesFromCSV("Movies.csv");
+        DatabaseConnection db = new DatabaseConnection();
+        try (Connection conn = db.getConnection()) {
+            ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM Movies");
+            while (rs.next()) {
+                int id = rs.getInt("movieID");
+                String MovieTitle = rs.getString("MovieTitle");
+                String Genre = rs.getString("Genre");
+                String Rating = rs.getString("Rating");
+                String Synopsis = rs.getString("Synopsis");
+                String showTimes = rs.getString("ShowTimes");
+                movies.add(new Movie(id, MovieTitle, Genre, Rating, Synopsis, showTimes));
+            }
+        } catch (Exception e) {
+            System.out.println("Error loading movies from database: " + e.getMessage());
+        }
     }
 
     public void menu() {
@@ -47,14 +65,27 @@ public class AfterLogin {
     }
 
     private void showMovies() {
-        loadMoviesFromCSV("Movies.csv"); // Reload movies to get the latest updates
-        if (movies.isEmpty()) {
-            System.out.println("No movies available.");
-        } else {
-            System.out.println("Movies:");
-            for (Movie movie : movies) {
-                System.out.println(movie);
+        movies.clear(); // Clear the current list to avoid duplicates
+        String url = "jdbc:mysql://localhost:3306/moviedb"; // Replace with your database URL
+        String user = "root"; // Replace with your database username
+        String password = ""; // Replace with your database password
+
+        try (Connection conn = DriverManager.getConnection(url, user, password);
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery("SELECT * FROM movies")) {
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String title = rs.getString("title");
+                String genre = rs.getString("genre");
+                String rating = rs.getString("rating");
+                String synopsis = rs.getString("synopsis");
+                String showTimes = rs.getString("show_times");
+
+                movies.add(new Movie(id, title, genre, rating, synopsis, showTimes));
             }
+        } catch (Exception e) {
+            System.out.println("Error loading movies from database: " + e.getMessage());
         }
     }
 

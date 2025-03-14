@@ -1,5 +1,3 @@
-
-
 import java.io.*;
 import java.util.Scanner;
 
@@ -36,7 +34,7 @@ public class UserGPT {
     // Load user from file based on email and password
     public static UserGPT loadFromFile(Scanner sc) {
         System.out.print("Enter your username to login: ");
-        String inputEmail = sc.nextLine();
+        String inputname = sc.nextLine();
         System.out.print("Enter your password: ");
         String inputPassword = sc.nextLine();
 
@@ -56,13 +54,13 @@ public class UserGPT {
                     String email = userData[2];
                     String phone = userData[3];
 
-                    if (email.equals(inputEmail) && password.equals(inputPassword)) {
+                    if (name.equals(inputname) && password.equals(inputPassword)) {
                         System.out.println("Login Successful!");
                         return new UserGPT(name, password, email, phone);
                     }
                 }
             }
-            System.out.println("Invalid email or password!");
+            System.out.println("Invalid username or password!");
         } catch (IOException e) {
             System.out.println("Error reading user data: " + e.getMessage());
         }

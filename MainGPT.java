@@ -24,6 +24,8 @@ public class MainGPT {
                     user = UserGPT.loadFromFile(sc);
                     if (user != null) {
                         user.displayProfile();
+                        AfterLogin afterLogin = new AfterLogin();
+                        afterLogin.menu();
                     }
                     break;
 
@@ -39,4 +41,5 @@ public class MainGPT {
         }
     }
 }
+
 
