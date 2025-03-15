@@ -1,9 +1,6 @@
 import java.util.Scanner;
 import java.util.List;
 import java.util.ArrayList;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -16,23 +13,8 @@ public class AfterLogin {
 
     public AfterLogin() {
         this.movies = new ArrayList<>();
-        DatabaseConnection db = new DatabaseConnection();
-        try (Connection conn = db.getConnection()) {
-            ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM Movies");
-            while (rs.next()) {
-                int id = rs.getInt("movieID");
-                String MovieTitle = rs.getString("MovieTitle");
-                String Genre = rs.getString("Genre");
-                String Rating = rs.getString("Rating");
-                String Synopsis = rs.getString("Synopsis");
-                String showTimes = rs.getString("ShowTimes");
-                movies.add(new Movie(id, MovieTitle, Genre, Rating, Synopsis, showTimes));
-            }
-        } catch (Exception e) {
-            System.out.println("Error loading movies from database: " + e.getMessage());
-        }
+        loadMoviesFromDatabase();
     }
-
     public void menu() {
         while (true) {
             System.out.println("\n1. Movies");
@@ -64,7 +46,7 @@ public class AfterLogin {
         }
     }
 
-    private void showMovies() {
+    private void loadMoviesFromDatabase() {
         movies.clear(); // Clear the current list to avoid duplicates
         String url = "jdbc:mysql://localhost:3306/moviedb";
         String user = "root";
@@ -75,20 +57,29 @@ public class AfterLogin {
              ResultSet rs = stmt.executeQuery("SELECT * FROM movies")) {
 
             while (rs.next()) {
-                int moveID = rs.getInt("id");
+                int id = rs.getInt("movieID");
                 String title = rs.getString("title");
                 String genre = rs.getString("genre");
                 String rating = rs.getString("rating");
                 String synopsis = rs.getString("synopsis");
                 String showTimes = rs.getString("show_times");
 
-                movies.add(new Movie(moveID, title, genre, rating, synopsis, showTimes));
+                movies.add(new Movie(id, title, genre, rating, synopsis, showTimes));
             }
         } catch (Exception e) {
             System.out.println("Error loading movies from database: " + e.getMessage());
         }
     }
-
+    private void showMovies(){
+        if (movies.isEmpty()){
+            System.out.println("No movies available.");
+        } else {
+            System.out.println("List of movies:");
+            for (Movie movie : movies) {
+                System.out.println(movie);
+            }
+        }
+    }
     private void buyTicket() {
         showMovies(); // Show the list of movies first
         System.out.print("What movie do you want to watch? (select number): ");
@@ -167,22 +158,6 @@ public class AfterLogin {
             System.out.println("Recent Booking: " + recentBooking);
         } else {
             System.out.println("No recent bookings.");
-        }
-    }
-
-    private void loadMoviesFromCSV(String filePath) {
-        movies.clear(); // Clear the current list to avoid duplicates
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] values = line.split(",");
-                if (values.length == 6) {
-                    int id = Integer.parseInt(values[0]);
-                    movies.add(new Movie(id, values[1], values[2], values[3], values[4], values[5]));
-                }
-            }
-        } catch (IOException e) {
-            System.out.println("Error reading movies from CSV file: " + e.getMessage());
         }
     }
 
