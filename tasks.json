@@ -1,0 +1,33 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "Export Database",
+        "type": "shell",
+        "command": "./export_db.sh",
+        "group": {
+          "kind": "build",
+          "isDefault": true
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "Import Database",
+        "type": "shell",
+        "command": "./import_db.sh",
+        "group": {
+          "kind": "build",
+          "isDefault": false
+        },
+        "problemMatcher": []
+      }
+    ]
+  }
+// Explanation:
+// version: Specifies the version of the tasks format (should always be 2.0.0).
+// tasks: The list of tasks to define.
+// label: The name of the task. This will appear in VS Code’s Task Runner menu.
+// type: The type of task. Since we're running shell scripts, we use shell.
+// command: The command to run. In this case, it's the path to your script (e.g., ./export_db.sh).
+// group: This groups the task as either a build or test task. It helps organize the tasks and set defaults.
+// problemMatcher: Optional, this can be used to link tasks to problem matchers for error handling, but for simple scripts, it’s usually left empty.
