@@ -21,7 +21,7 @@ public class MainGPT {
                     break;
 
                 case 2:
-                    user = UserGPT.loadFromFile(sc);
+                    user = UserGPT.loadFromDatabase(sc);
                     if (user != null) {
                         user.displayProfile();
                         AfterLogin afterLogin = new AfterLogin();

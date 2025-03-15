@@ -1,5 +1,9 @@
-import java.io.*;
 import java.util.Scanner;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.ResultSet;
 
 public class UserGPT {
     private String name, password, email, phone;
@@ -19,55 +23,62 @@ public class UserGPT {
         return this.password.equals(password);
     }
 
-    // Save user details to a text file
-    public void saveToFile() {
-        try (FileWriter fw = new FileWriter("users.txt", true);
-             BufferedWriter bw = new BufferedWriter(fw);
-             PrintWriter out = new PrintWriter(bw)) {
-            out.println(name + "," + password + "," + email + "," + phone);
-            System.out.println("User data saved successfully!");
-        } catch (IOException e) {
+    // Save user details to database
+    public void saveToDatabase() {
+        String url = "jdbc:mysql://localhost:3306/moviedb";	
+        String user = "root";
+        String pass = "Xe2233nN#";
+
+        String query = "INSERT INTO Users (Name, Password, Email, Phone) VALUES (?, ?, ?, ?)";
+        try (Connection conn = DriverManager.getConnection(url, user, pass);
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, name);
+            stmt.setString(2, password);
+            stmt.setString(3, email);
+            stmt.setString(4, phone);
+
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
             System.out.println("Error saving user data: " + e.getMessage());
         }
     }
-
-    // Load user from file based on email and password
-    public static UserGPT loadFromFile(Scanner sc) {
-        System.out.print("Enter your username to login: ");
-        String inputname = sc.nextLine();
+    // Load user from the database based on email and password
+    public static UserGPT loadFromDatabase(Scanner sc) {
+        System.out.print("Enter your username: ");
+        String inputname= sc.nextLine();
         System.out.print("Enter your password: ");
         String inputPassword = sc.nextLine();
 
-        File file = new File("users.txt");
-        if (!file.exists()) {
-            System.out.println("No user data found. Please register first.");
-            return null;
-        }
+        String url = "jdbc:mysql://localhost:3306/moviedb";
+        String user = "root";
+        String password = "Xe2233nN#";
 
-        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] userData = line.split(",");
-                if (userData.length == 4) {
-                    String name = userData[0];
-                    String password = userData[1];
-                    String email = userData[2];
-                    String phone = userData[3];
+        String query = "SELECT * FROM Users WHERE name = ? AND password = ?";
 
-                    if (name.equals(inputname) && password.equals(inputPassword)) {
-                        System.out.println("Login Successful!");
-                        return new UserGPT(name, password, email, phone);
-                    }
-                }
+        try (Connection conn = DriverManager.getConnection(url, user, password);
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, inputname);
+            stmt.setString(2, inputPassword);
+
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                String name = rs.getString("name");
+                String email = rs.getString("email");
+                String phone = rs.getString("phone");
+                System.out.println("Login Successful!");
+                return new UserGPT(name, inputPassword, email, phone);
+            } else {
+                System.out.println("Invalid email or password!");
             }
-            System.out.println("Invalid username or password!");
-        } catch (IOException e) {
-            System.out.println("Error reading user data: " + e.getMessage());
+        } catch (SQLException e) {
+            System.out.println("Error loading user from database: " + e.getMessage());
         }
         return null;
     }
 
-    // Register a new user and save to file
+    // Register a new user and save to the database
     public static UserGPT register(Scanner sc) {
         System.out.print("Enter your name: ");
         String name = sc.nextLine();
@@ -84,17 +95,17 @@ public class UserGPT {
             System.out.println("Passwords do not match!");
             return null;
         }
+        System.out.println("Registration Successful!");
 
         UserGPT user = new UserGPT(name, password, email, phone);
-        user.saveToFile();
-        System.out.println("User registered successfully!");
+        user.saveToDatabase();
         return user;
     }
 
     // Display user profile information
     public void displayProfile() {
         System.out.println("\nUser Profile:");
-        System.out.println("Username: " + name);
+        System.out.println("Name: " + name);
         System.out.println("Email: " + email);
         System.out.println("Phone: " + phone);
     }
