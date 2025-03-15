@@ -58,11 +58,11 @@ public class AfterLogin {
 
             while (rs.next()) {
                 int id = rs.getInt("movieID");
-                String title = rs.getString("title");
-                String genre = rs.getString("genre");
-                String rating = rs.getString("rating");
-                String synopsis = rs.getString("synopsis");
-                String showTimes = rs.getString("show_times");
+                String title = rs.getString("MovieTitle");
+                String genre = rs.getString("Genre");
+                String rating = rs.getString("Rating");
+                String synopsis = rs.getString("Synopsis");
+                String showTimes = rs.getString("ShowTimes");
 
                 movies.add(new Movie(id, title, genre, rating, synopsis, showTimes));
             }
