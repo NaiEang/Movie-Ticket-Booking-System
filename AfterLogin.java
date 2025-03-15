@@ -66,23 +66,23 @@ public class AfterLogin {
 
     private void showMovies() {
         movies.clear(); // Clear the current list to avoid duplicates
-        String url = "jdbc:mysql://localhost:3306/moviedb"; // Replace with your database URL
-        String user = "root"; // Replace with your database username
-        String password = ""; // Replace with your database password
+        String url = "jdbc:mysql://localhost:3306/moviedb";
+        String user = "root";
+        String password = "Xe2233nN#";
 
         try (Connection conn = DriverManager.getConnection(url, user, password);
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery("SELECT * FROM movies")) {
 
             while (rs.next()) {
-                int id = rs.getInt("id");
+                int moveID = rs.getInt("id");
                 String title = rs.getString("title");
                 String genre = rs.getString("genre");
                 String rating = rs.getString("rating");
                 String synopsis = rs.getString("synopsis");
                 String showTimes = rs.getString("show_times");
 
-                movies.add(new Movie(id, title, genre, rating, synopsis, showTimes));
+                movies.add(new Movie(moveID, title, genre, rating, synopsis, showTimes));
             }
         } catch (Exception e) {
             System.out.println("Error loading movies from database: " + e.getMessage());
