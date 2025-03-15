@@ -6,12 +6,12 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-public class Menu {
+public class HomePage {
     private Scanner scanner = new Scanner(System.in);
     private List<Movie> movies;
     private String recentBooking = null;
 
-    public Menu() {
+    public HomePage() {
         this.movies = new ArrayList<>();
         loadMoviesFromDatabase();
     }
@@ -164,7 +164,7 @@ public class Menu {
     }
 
     public static void main(String[] args) {
-        Menu afterLogin = new Menu();
+        HomePage afterLogin = new HomePage();
         afterLogin.menu();
     }
 }
