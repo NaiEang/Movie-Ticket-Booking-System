@@ -5,10 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 
-public class UserGPT {
+public class Login {
     private String name, password, email, phone;
 
-    public UserGPT(String name, String password, String email, String phone) {
+    public Login(String name, String password, String email, String phone) {
         this.name = name;
         this.password = password;
         this.email = email;
@@ -44,7 +44,7 @@ public class UserGPT {
         }
     }
     // Load user from the database based on email and password
-    public static UserGPT loadFromDatabase(Scanner sc) {
+    public static Login loadFromDatabase(Scanner sc) {
         System.out.print("Enter your username: ");
         String inputname= sc.nextLine();
         System.out.print("Enter your password: ");
@@ -68,7 +68,7 @@ public class UserGPT {
                 String email = rs.getString("email");
                 String phone = rs.getString("phone");
                 System.out.println("Login Successful!");
-                return new UserGPT(name, inputPassword, email, phone);
+                return new Login(name, inputPassword, email, phone);
             } else {
                 System.out.println("Invalid email or password!");
             }
@@ -79,7 +79,7 @@ public class UserGPT {
     }
 
     // Register a new user and save to the database
-    public static UserGPT register(Scanner sc) {
+    public static Login register(Scanner sc) {
         System.out.print("Enter your name: ");
         String name = sc.nextLine();
         System.out.print("Enter your email: ");
@@ -97,7 +97,7 @@ public class UserGPT {
         }
         System.out.println("Registration Successful!");
 
-        UserGPT user = new UserGPT(name, password, email, phone);
+        Login user = new Login(name, password, email, phone);
         user.saveToDatabase();
         return user;
     }

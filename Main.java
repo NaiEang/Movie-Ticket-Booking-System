@@ -1,9 +1,9 @@
 import java.util.Scanner;
 
-public class MainGPT {
+public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        UserGPT user = null;
+        Login user = null;
 
         System.out.println("===== Welcome to Movie Booking System =====");
 
@@ -17,14 +17,14 @@ public class MainGPT {
 
             switch (choice) {
                 case 1:
-                    user = UserGPT.register(sc);
+                    user = Login.register(sc);
                     break;
 
                 case 2:
-                    user = UserGPT.loadFromDatabase(sc);
+                    user = Login.loadFromDatabase(sc);
                     if (user != null) {
                         user.displayProfile();
-                        AfterLogin afterLogin = new AfterLogin();
+                        Menu afterLogin = new Menu();
                         afterLogin.menu();
                     }
                     break;

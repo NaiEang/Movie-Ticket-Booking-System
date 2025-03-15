@@ -6,12 +6,12 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-public class AfterLogin {
+public class Menu {
     private Scanner scanner = new Scanner(System.in);
     private List<Movie> movies;
     private String recentBooking = null;
 
-    public AfterLogin() {
+    public Menu() {
         this.movies = new ArrayList<>();
         loadMoviesFromDatabase();
     }
@@ -74,7 +74,9 @@ public class AfterLogin {
         if (movies.isEmpty()){
             System.out.println("No movies available.");
         } else {
+            System.out.println("");
             System.out.println("List of movies:");
+            System.out.println("");
             for (Movie movie : movies) {
                 System.out.println(movie);
             }
@@ -162,7 +164,7 @@ public class AfterLogin {
     }
 
     public static void main(String[] args) {
-        AfterLogin afterLogin = new AfterLogin();
+        Menu afterLogin = new Menu();
         afterLogin.menu();
     }
 }
