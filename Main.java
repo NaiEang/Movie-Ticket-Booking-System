@@ -9,7 +9,7 @@ public class Main {
 
         while (true) {
             System.out.println("\n1. Register");
-            System.out.println("2. UserAuthentication");
+            System.out.println("2. Login");
             System.out.println("3. Exit");
             System.out.print("Choose Option: ");
             int choice = sc.nextInt();
@@ -23,10 +23,16 @@ public class Main {
                 case 2:
                     user = UserAuthentication.loadFromDatabase(sc);
                     if (user != null) {
+                        //Check for admin credential
+                        if(user.getName().equals("admin") && user.getPassword().equals("##2233##")){
+                            Admin admin = new Admin();
+                            admin.menu();
+                        }else{
                         user.displayProfile();
                         HomePage afterUserAuthentication = new HomePage();
                         afterUserAuthentication.menu();
                     }
+                }
                     break;
 
                 case 3:

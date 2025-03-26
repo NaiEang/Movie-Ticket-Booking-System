@@ -16,6 +16,7 @@ public class UserAuthentication {
     }
 
     public String getName() { return name; }
+    public String getPassword() { return password; }
     public String getEmail() { return email; }
     public String getPhone() { return phone; }
 
@@ -70,7 +71,7 @@ public class UserAuthentication {
                 System.out.println("Login Successful!");
                 return new UserAuthentication(name, inputPassword, email, phone);
             } else {
-                System.out.println("Invalid email or password!");
+                System.out.println("Invalid username or password!");
             }
         } catch (SQLException e) {
             System.out.println("Error loading user from database: " + e.getMessage());

@@ -22,7 +22,7 @@ public class HomePage {
             System.out.println("3. View Booking");
             System.out.println("4. Update Profile");
             System.out.println("5. Notification");
-            System.out.println("6. Exit");
+            System.out.println("6. Log out");
             System.out.print("Choose an option: ");
             int choice = scanner.nextInt();
             scanner.nextLine(); // Consume newline

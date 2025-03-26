@@ -1,5 +1,7 @@
 import java.sql.*;
 import java.util.Scanner;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 class Admin {
     private Scanner scanner = new Scanner(System.in);
@@ -118,12 +120,15 @@ class Admin {
 
     public void menu() {
         while (true) {
+            System.out.println("\n===== Admin Menu =====");
             System.out.println("\n1. Add Movie");
             System.out.println("2. Update Movie");
             System.out.println("3. Delete Movies");
             System.out.println("4. View Movies");
             System.out.println("5. Exit");
+            System.out.println("=======================");
             System.out.print("Choose an option: ");
+            
             int choice = scanner.nextInt();
             scanner.nextLine();
             switch (choice) {
