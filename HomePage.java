@@ -17,6 +17,18 @@ public class HomePage {
     }
     public void menu() {
         while (true) {
+            System.out.println("====================================================================================");
+            System.out.println(" /$$   /$$                                                                          ");
+            System.out.println("| $$  | $$                                                                          ");
+            System.out.println("| $$  | $$  /$$$$$$  /$$$$$$/$$$$   /$$$$$$   /$$$$$$   /$$$$$$   /$$$$$$   /$$$$$$ ");
+            System.out.println("| $$$$$$$$ /$$__  $$| $$_  $$_  $$ /$$__  $$ /$$__  $$ |____  $$ /$$__  $$ /$$__  $$");
+            System.out.println("| $$__  $$| $$  \\ $$| $$ \\ $$ \\ $$| $$$$$$$$| $$  \\ $$  /$$$$$$$| $$  \\ $$| $$$$$$$$");
+            System.out.println("| $$  | $$| $$  | $$| $$ | $$ | $$| $$_____/| $$  | $$ /$$__  $$| $$  | $$| $$_____/");
+            System.out.println("| $$  | $$|  $$$$$$/| $$ | $$ | $$|  $$$$$$$| $$$$$$$/|  $$$$$$$|  $$$$$$$|  $$$$$$$");
+            System.out.println("|__/  |__/ \\______/ |__/ |__/ |__/ \\_______/| $$____/  \\_______/ \\____  $$ \\_______/");
+            System.out.println("                                            | $$                 /$$  \\ $$          ");
+            System.out.println("                                            | $$                |  $$$$$$/          ");
+            System.out.println("                                            |__/                 \\______/           ");
             System.out.println("\n1. Movies");
             System.out.println("2. Buy Ticket");
             System.out.println("3. View Booking");
