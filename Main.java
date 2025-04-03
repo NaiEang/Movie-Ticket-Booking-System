@@ -6,7 +6,7 @@ public class Main {
         UserAuthentication user = null;
 
         System.out.println("");
-        System.out.println("===== Welcome to Movie Booking System =====");
+        System.out.print("===== Welcome to Movie Booking System =====");
 
         while (true) {
             System.out.println("\n1. Register");

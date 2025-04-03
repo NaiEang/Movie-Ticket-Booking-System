@@ -4,6 +4,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
+import java.io.Console;
 
 public class UserAuthentication {
     private String name, password, email, phone;
@@ -44,12 +45,25 @@ public class UserAuthentication {
             System.out.println("Error saving user data: " + e.getMessage());
         }
     }
+    //login method
     // Load user from the database based on email and password
     public static UserAuthentication loadFromDatabase(Scanner sc) {
         System.out.print("Enter your username: ");
         String inputname= sc.nextLine();
-        System.out.print("Enter your password: ");
-        String inputPassword = sc.nextLine();
+
+        String inputPassword;
+        Console console = System.console();
+        if (console == null) {
+            //this will hide pw
+            char[] passwordArray = console.readPassword("Enter your password: ");
+            inputPassword = new String(passwordArray);
+            //clear password array
+            java.util.Arrays.fill(passwordArray, ' ');
+        } else {
+            //if console is null, use Scanner to read password
+            System.out.print("Enter your password: ");
+            inputPassword = sc.nextLine();
+        }
 
         String url = "jdbc:mysql://localhost:3306/moviedb";
         String user = "root";
@@ -87,12 +101,30 @@ public class UserAuthentication {
         String email = sc.nextLine();
         System.out.print("Enter your phone: ");
         String phone = sc.nextLine();
-        System.out.print("Enter your password: ");
-        String password = sc.nextLine();
-        System.out.print("Confirm your password: ");
-        String confirmPassword = sc.nextLine();
 
-        if (!password.equals(confirmPassword)) {
+        String password, confirmpw;
+        Console console = System.console();
+        if(console == null) {
+            //this will hide pw
+            char[] passwordArray = console.readPassword("Enter your password: ");
+            password = new String(passwordArray);
+            //clear password array
+            java.util.Arrays.fill(passwordArray, ' ');
+
+            char[] confirmPasswordArray = console.readPassword("Confirm your password: ");
+            confirmpw = new String(confirmPasswordArray);
+            //clear password array
+            java.util.Arrays.fill(confirmPasswordArray, ' ');
+        } else {
+            //if console is null, use Scanner to read password
+            System.out.print("Enter your password: ");
+            password = sc.nextLine();
+            System.out.print("Confirm your password: ");
+            confirmpw = sc.nextLine();
+
+        }
+
+        if (!password.equals(confirmpw)) {
             System.out.println("Passwords do not match!");
             return null;
         }
