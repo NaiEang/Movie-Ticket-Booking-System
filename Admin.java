@@ -18,15 +18,18 @@ class Admin {
         String synopsis = scanner.nextLine();
         System.out.print("Show Times: ");
         String showTimes = scanner.nextLine();
+        System.out.print("Hall: ");
+        String hall = scanner.nextLine();
 
         try (Connection conn = DatabaseConnection.getConnection()) {
-            String query = "INSERT INTO Movies (MovieTitle, Genre, Rating, Synopsis, ShowTimes) VALUES (?, ?, ?, ?, ?)";
+            String query = "INSERT INTO Movies (MovieTitle, Genre, Rating, Synopsis, ShowTimes, Hall) VALUES (?, ?, ?, ?, ?, ?)";
             PreparedStatement stmt = conn.prepareStatement(query);
             stmt.setString(1, movietitle);
             stmt.setString(2, genre);
             stmt.setString(3, rating);
             stmt.setString(4, synopsis);
             stmt.setString(5, showTimes);
+            stmt.setString(6, hall);
             stmt.executeUpdate();
             System.out.println("Movie added successfully!");
         } catch (SQLException e) {
@@ -49,6 +52,8 @@ class Admin {
         String newSynopsis = scanner.nextLine();
         System.out.print("Enter new show times: ");
         String newShowtimes = scanner.nextLine();
+        System.out.print("Enter new hall: ");
+        String newHall = scanner.nextLine();
 
         try (Connection conn = DatabaseConnection.getConnection()) {
             String query = "UPDATE Movies SET MovieTitle=?, Genre=?, Rating=?, Synopsis=?, ShowTimes=? WHERE movieID=?";
@@ -58,7 +63,8 @@ class Admin {
             stmt.setString(3, newRating);
             stmt.setString(4, newSynopsis);
             stmt.setString(5, newShowtimes);
-            stmt.setInt(6, id);
+            stmt.setString(6, newHall);
+            stmt.setInt(7, id);
             int rowsUpdated = stmt.executeUpdate();
 
             if (rowsUpdated > 0) {
@@ -110,7 +116,8 @@ class Admin {
                     ", Genre: " + rs.getString("Genre") +
                     ", Rating: " + rs.getString("Rating") +
                     ", Synopsis: " + rs.getString("Synopsis") +
-                    ", Show Times: " + rs.getString("ShowTimes")
+                    ", Show Times: " + rs.getString("ShowTimes")+
+                    ", Hall: " + rs.getString("Hall")
                 );
             }
         } catch (SQLException e) {

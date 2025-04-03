@@ -63,8 +63,9 @@ public class HomePage {
                 String rating = rs.getString("Rating");
                 String synopsis = rs.getString("Synopsis");
                 String showTimes = rs.getString("ShowTimes");
+                String Hall = rs.getString("Hall");
 
-                movies.add(new Movie(id, title, genre, rating, synopsis, showTimes));
+                movies.add(new Movie(id, title, genre, rating, synopsis, showTimes, Hall));
             }
         } catch (Exception e) {
             System.out.println("Error loading movies from database: " + e.getMessage());
@@ -162,6 +163,13 @@ public class HomePage {
             System.out.println("No recent bookings.");
         }
     }
+    public void Notification() {
+        if (recentBooking != null) {
+            System.out.println("Recent Booking: " + recentBooking);
+        } else {
+            System.out.println("No recent bookings.");
+        }
+    }
 
     public static void main(String[] args) {
         HomePage afterLogin = new HomePage();
@@ -172,15 +180,16 @@ public class HomePage {
 // Reuse the Movie class from Admin.java
 class Movie {
     int movieID;
-    String MovieTitle, Genre, Rating, Synopsis, showTimes, availableSeats;
+    String MovieTitle, Genre, Rating, Synopsis, showTimes, availableSeats, Hall;
 
-    public Movie(int movieID, String MovieTitle, String Genre, String Rating, String Synopsis, String showTimes) {
+    public Movie(int movieID, String MovieTitle, String Genre, String Rating, String Synopsis, String showTimes, String Hall) {
         this.movieID = movieID;
         this.MovieTitle = MovieTitle;
         this.Genre = Genre;
         this.Rating = Rating;
         this.Synopsis = Synopsis;
         this.showTimes = showTimes;
+        this.Hall = Hall;
         this.availableSeats = availableSeats;
     }
 
@@ -226,6 +235,12 @@ class Movie {
 
     public void setshowTimes(String showTimes) {
         this.showTimes = showTimes;
+    }
+    public void setHall(String Hall) {
+        this.Hall = Hall;
+    }
+    public String getHall() {
+        return Hall;
     }
 
     @Override

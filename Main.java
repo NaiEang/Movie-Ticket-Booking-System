@@ -5,12 +5,14 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         UserAuthentication user = null;
 
+        System.out.println("");
         System.out.println("===== Welcome to Movie Booking System =====");
 
         while (true) {
             System.out.println("\n1. Register");
             System.out.println("2. Login");
             System.out.println("3. Exit");
+            System.out.println("============================================");
             System.out.print("Choose Option: ");
             int choice = sc.nextInt();
             sc.nextLine(); // consume newline
